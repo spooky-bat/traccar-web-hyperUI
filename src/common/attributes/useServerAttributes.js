@@ -31,6 +31,16 @@ export default (t) => useMemo(() => ({
     type: 'string',
     subtype: 'color',
   },
+  mapColorSidePanel: {
+    name: t('serverMapColorSidePanel'),
+    type: 'string',
+    subtype: 'color',
+  },
+  mapColorStatusCard: {
+    name: t('serverMapColorStatusCard'),
+    type: 'string',
+    subtype: 'color',
+  },
   disableChange: {
     name: t('serverChangeDisable'),
     type: 'boolean',

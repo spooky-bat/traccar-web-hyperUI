@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import {
   Button,
@@ -14,6 +14,7 @@ import {
   AccordionSummary,
   Typography,
   AccordionDetails,
+  FormHelperText,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
@@ -27,7 +28,9 @@ import {
 import useFeatures from '../../common/util/useFeatures';
 import useSettingsStyles from '../common/useSettingsStyles';
 
-const EditAttributesAccordion = ({ attribute, attributes, setAttributes, definitions, focusAttribute }) => {
+const EditAttributesAccordion = ({
+  attribute, attributes, setAttributes, definitions, focusAttribute, onValidation,
+}) => {
   const { classes } = useSettingsStyles();
   const t = useTranslation();
 
@@ -38,8 +41,27 @@ const EditAttributesAccordion = ({ attribute, attributes, setAttributes, definit
   const volumeUnit = useAttributePreference('volumeUnit');
 
   const [addDialogShown, setAddDialogShown] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const validate = (key, value, subtype) => {
+    if (subtype === 'color') {
+      if (value && !/^#([0-9A-Fa-f]{3}){1,2}$/.test(value)) {
+        setErrors((prev) => ({ ...prev, [key]: true }));
+        return false;
+      }
+    }
+    setErrors((prev) => ({ ...prev, [key]: false }));
+    return true;
+  };
+
+  useEffect(() => {
+    if (onValidation) {
+      onValidation(Object.values(errors).some((e) => e));
+    }
+  }, [errors, onValidation]);
 
   const updateAttribute = (key, value, type, subtype) => {
+    validate(key, value, subtype);
     const updatedAttributes = { ...attributes };
     switch (subtype) {
       case 'speed':
@@ -62,6 +84,7 @@ const EditAttributesAccordion = ({ attribute, attributes, setAttributes, definit
     const updatedAttributes = { ...attributes };
     delete updatedAttributes[key];
     setAttributes(updatedAttributes);
+    setErrors((prev) => ({ ...prev, [key]: undefined }));
   };
 
   const getAttributeName = (key, subtype) => {
@@ -176,8 +199,9 @@ const EditAttributesAccordion = ({ attribute, attributes, setAttributes, definit
               </Grid>
             );
           }
+          const isError = errors[key];
           return (
-            <FormControl key={key}>
+            <FormControl key={key} error={isError}>
               <InputLabel>{getAttributeName(key, subtype)}</InputLabel>
               <OutlinedInput
                 label={getAttributeName(key, subtype)}
@@ -185,6 +209,7 @@ const EditAttributesAccordion = ({ attribute, attributes, setAttributes, definit
                 value={getDisplayValue(value, subtype)}
                 onChange={(e) => updateAttribute(key, e.target.value, type, subtype)}
                 autoFocus={focusAttribute === key}
+                placeholder={subtype === 'color' ? '#RRGGBB' : ''}
                 endAdornment={(
                   <InputAdornment position="end">
                     <IconButton size="small" edge="end" onClick={() => deleteAttribute(key)}>
@@ -193,6 +218,7 @@ const EditAttributesAccordion = ({ attribute, attributes, setAttributes, definit
                   </InputAdornment>
                 )}
               />
+              {isError && <FormHelperText>{t('errorInvalidColor')}</FormHelperText>}
             </FormControl>
           );
         })}

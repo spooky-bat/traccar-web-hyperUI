@@ -74,6 +74,9 @@ const MainPage = () => {
 
   const mapOnSelect = useAttributePreference('mapOnSelect', true);
 
+  const server = useSelector((state) => state.session.server);
+  const mapColorSidePanel = server?.attributes?.mapColorSidePanel;
+
   const selectedDeviceId = useSelector((state) => state.devices.selectedId);
   const positions = useSelector((state) => state.session.positions);
   const [filteredPositions, setFilteredPositions] = useState([]);
@@ -112,7 +115,14 @@ const MainPage = () => {
         />
       )}
       <div className={classes.sidebar}>
-        <Paper square elevation={3} className={classes.header}>
+        <Paper
+          square
+          elevation={3}
+          className={classes.header}
+          style={{
+            ...mapColorSidePanel && { backgroundColor: mapColorSidePanel },
+          }}
+        >
           <MainToolbar
             filteredDevices={filteredDevices}
             devicesOpen={devicesOpen}
@@ -137,7 +147,14 @@ const MainPage = () => {
               />
             </div>
           )}
-          <Paper square className={classes.contentList} style={devicesOpen ? {} : { visibility: 'hidden' }}>
+          <Paper
+            square
+            className={classes.contentList}
+            style={{
+              ...devicesOpen ? {} : { visibility: 'hidden' },
+              ...mapColorSidePanel && { backgroundColor: mapColorSidePanel },
+            }}
+          >
             <DeviceList devices={filteredDevices} />
           </Paper>
         </div>

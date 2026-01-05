@@ -125,6 +125,7 @@ const StatusCard = ({ deviceId, position, onClose, disableActions, desktopPaddin
   const readonly = useRestriction('readonly');
   const deviceReadonly = useDeviceReadonly();
 
+  const mapColorStatusCard = useSelector((state) => state.session.server.attributes.mapColorStatusCard);
   const shareDisabled = useSelector((state) => state.session.server.attributes.disableShare);
   const user = useSelector((state) => state.session.user);
   const device = useSelector((state) => state.devices.items[deviceId]);
@@ -178,7 +179,13 @@ const StatusCard = ({ deviceId, position, onClose, disableActions, desktopPaddin
             dragHandleClassName="draggable-header"
             style={{ position: 'relative' }}
           >
-            <Card elevation={3} className={classes.card}>
+            <Card
+              elevation={3}
+              className={classes.card}
+              style={{
+                ...mapColorStatusCard && { backgroundColor: mapColorStatusCard },
+              }}
+            >
               {deviceImage ? (
                 <CardMedia
                   className={`${classes.media} draggable-header`}

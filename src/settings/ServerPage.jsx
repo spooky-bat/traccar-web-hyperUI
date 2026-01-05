@@ -47,6 +47,7 @@ const ServerPage = () => {
 
   const original = useSelector((state) => state.session.server);
   const [item, setItem] = useState({ ...original });
+  const [attributeErrors, setAttributeErrors] = useState(false);
 
   const handleFileChange = useCatch(async (newFile) => {
     if (newFile) {
@@ -283,6 +284,7 @@ const ServerPage = () => {
               attributes={item.attributes}
               setAttributes={(attributes) => setItem({ ...item, attributes })}
               definitions={{ ...commonUserAttributes, ...commonDeviceAttributes, ...serverAttributes }}
+              onValidation={setAttributeErrors}
             />
           </>
         )}
@@ -290,7 +292,7 @@ const ServerPage = () => {
           <Button type="button" color="primary" variant="outlined" onClick={() => navigate(-1)}>
             {t('sharedCancel')}
           </Button>
-          <Button type="button" color="primary" variant="contained" onClick={handleSave}>
+          <Button type="button" color="primary" variant="contained" onClick={handleSave} disabled={attributeErrors}>
             {t('sharedSave')}
           </Button>
         </div>
