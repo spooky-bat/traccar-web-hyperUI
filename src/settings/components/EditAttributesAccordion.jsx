@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import {
   Button,
@@ -15,10 +15,13 @@ import {
   Typography,
   AccordionDetails,
   FormHelperText,
+  Popover,
+  Box,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
 import AddAttributeDialog from './AddAttributeDialog';
 import { useTranslation } from '../../common/components/LocalizationProvider';
 import { useAttributePreference } from '../../common/util/preferences';
@@ -42,6 +45,9 @@ const EditAttributesAccordion = ({
 
   const [addDialogShown, setAddDialogShown] = useState(false);
   const [errors, setErrors] = useState({});
+
+  const [openColorPickerKey, setOpenColorPickerKey] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const validate = (key, value, subtype) => {
     if (subtype === 'color') {
@@ -199,9 +205,10 @@ const EditAttributesAccordion = ({
               </Grid>
             );
           }
+          const isColorAttribute = subtype === 'color';
           const isError = errors[key];
           return (
-            <FormControl key={key} error={isError}>
+            <FormControl key={key} error={isError} fullWidth>
               <InputLabel>{getAttributeName(key, subtype)}</InputLabel>
               <OutlinedInput
                 label={getAttributeName(key, subtype)}
@@ -209,9 +216,54 @@ const EditAttributesAccordion = ({
                 value={getDisplayValue(value, subtype)}
                 onChange={(e) => updateAttribute(key, e.target.value, type, subtype)}
                 autoFocus={focusAttribute === key}
-                placeholder={subtype === 'color' ? '#RRGGBB' : ''}
+                placeholder={isColorAttribute ? '#RRGGBB' : ''}
                 endAdornment={(
                   <InputAdornment position="end">
+                    {isColorAttribute && (
+                      <>
+                        <IconButton
+                          size="small"
+                          onClick={(e) => {
+                            setOpenColorPickerKey(key);
+                            setAnchorEl(e.currentTarget);
+                          }}
+                        >
+                          <ColorLensIcon fontSize="small" />
+                        </IconButton>
+                        <Popover
+                          open={openColorPickerKey === key}
+                          anchorEl={anchorEl}
+                          onClose={() => {
+                            setOpenColorPickerKey(null);
+                            setAnchorEl(null);
+                          }}
+                          anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'right',
+                          }}
+                          transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                          }}
+                        >
+                          <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 1 }}>
+                            <TextField
+                              label={t('sharedHexColor')}
+                              value={value || ''}
+                              onChange={(e) => updateAttribute(key, e.target.value, type, subtype)}
+                              size="small"
+                              fullWidth
+                            />
+                            <input
+                              type="color"
+                              value={value || '#000000'}
+                              onChange={(e) => updateAttribute(key, e.target.value, type, subtype)}
+                              style={{ width: '100%', height: 50, border: 'none', padding: 0 }}
+                            />
+                          </Box>
+                        </Popover>
+                      </>
+                    )}
                     <IconButton size="small" edge="end" onClick={() => deleteAttribute(key)}>
                       <CloseIcon fontSize="small" />
                     </IconButton>
