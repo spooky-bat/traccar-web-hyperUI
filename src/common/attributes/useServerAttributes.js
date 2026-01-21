@@ -41,6 +41,16 @@ export default (t) => useMemo(() => ({
     type: 'string',
     subtype: 'color',
   },
+  mapColorToolbar: {
+    name: t('serverMapColorToolbar'),
+    type: 'string',
+    subtype: 'color',
+  },
+  deviceIconColor: {
+    name: t('serverDeviceIconColor'),
+    type: 'string',
+    subtype: 'color',
+  },
   disableChange: {
     name: t('serverChangeDisable'),
     type: 'boolean',

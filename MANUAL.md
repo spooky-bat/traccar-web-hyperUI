@@ -1,44 +1,39 @@
-# Instrukcja Konfiguracji
+# Instrukcja obsługi
 
-W tym dokumencie znajdziesz instrukcje, jak skonfigurować nowe funkcje w aplikacji Traccar.
+W tym pliku znajdziesz opisy konfiguracji i użytkowania nowych funkcji wprowadzonych w aplikacji.
 
-## Konfiguracja
+## Personalizacja kolorów interfejsu
 
-### Wybór koloru dla atrybutów
+Aplikacja umożliwia personalizację niektórych elementów interfejsu użytkownika poprzez zmianę ich kolorów. Poniżej znajduje się lista dostępnych opcji konfiguracji.
 
-Od teraz, dla wszystkich atrybutów związanych z kolorem, masz możliwość wyboru koloru zarówno poprzez wpisanie kodu heksadecymalnego, jak i za pomocą wizualnego selektora kolorów.
+### Jak zmienić kolory?
 
-1.  Zaloguj się na swoje konto administratora.
-2.  Przejdź do `Ustawienia` -> `Serwer` (lub innej sekcji, gdzie dostępne są atrybuty koloru).
-3.  W sekcji `Atrybuty` znajdź pole odpowiadające za kolor (np. `Map Side Panel Color`, `Map Status Card Color`, `Primary Color`, `Secondary Color`).
-4.  **Wprowadzanie ręczne:** Możesz nadal wpisać kod koloru w formacie heksadecymalnym (np. `#RRGGBB` lub `#RGB`) bezpośrednio do pola tekstowego. System posiada walidację formatu.
-5.  **Wybór z palety:** Obok pola tekstowego koloru znajduje się ikona palety (`🎨`). Kliknięcie tej ikony otworzy wizualny selektor kolorów.
-6.  Wybierz żądany kolor za pomocą selektora. Po wybraniu kolor automatycznie zostanie wprowadzony do pola tekstowego.
-7.  Jeśli wprowadzisz nieprawidłowy format koloru ręcznie, przycisk `Zapisz` zostanie zablokowany.
-8.  Zapisz zmiany.
+1.  Zaloguj się na swoje konto.
+2.  Przejdź do Ustawień (ikona koła zębatego w prawym górnym rogu).
+3.  Wybierz opcję "Serwer" z menu po lewej stronie.
+4.  W sekcji "Atrybuty" możesz dodawać i modyfikować atrybuty. Kliknij przycisk "Dodaj", aby dodać nowy atrybut.
+5.  W oknie, które się pojawi, wybierz odpowiedni atrybut z listy i kliknij "Dodaj".
+6.  Wprowadź wartość koloru w formacie heksadecymalnym (np. `#FF0000` dla czerwonego) w nowo dodanym polu. Możesz również użyć próbnika kolorów, aby wybrać kolor wizualnie.
+7.  Zapisz zmiany, klikając przycisk "Zapisz" na dole strony.
 
-### Kolor tła panelu bocznego na mapie
+### Dostępne atrybuty kolorów
 
-Aby zmienić kolor tła panelu bocznego (wraz z nagłówkiem) z listą urządzeń na ekranie mapy, wykonaj następujące kroki:
+#### Kolor panelu bocznego mapy (Map Side Panel Color)
 
-1.  Zaloguj się na swoje konto administratora.
-2.  Przejdź do `Ustawienia` -> `Serwer`.
-3.  W sekcji `Atrybuty` znajdź atrybut o nazwie `Map Side Panel Color` (lub `Kolor panelu bocznego mapy` w polskiej wersji językowej).
-4.  Wprowadź wybrany kolor w formacie heksadecymalnym (`#RRGGBB` lub `#RGB`) lub użyj ikony palety, aby wybrać kolor wizualnie. Pole posiada walidację i nie pozwoli na zapisanie nieprawidłowego formatu. Placeholder w polu (`#RRGGBB`) podpowiada oczekiwany format.
-5.  Jeśli format koloru jest nieprawidłowy, przycisk `Zapisz` będzie nieaktywny.
-6.  Zapisz zmiany.
+-   **Atrybut:** `mapColorSidePanel`
+-   **Opis:** Zmienia kolor tła panelu bocznego, na którym wyświetlana jest lista urządzeń na głównym ekranie mapy.
 
-Kolor panelu bocznego oraz jego nagłówka zostanie zaktualizowany po odświeżeniu strony.
+#### Kolor karty statusu na mapie (Map Status Card Color)
 
-### Kolor tła karty statusu urządzenia
+-   **Atrybut:** `mapColorStatusCard`
+-   **Opis:** Zmienia kolor tła karty statusu, która pojawia się po wybraniu urządzenia na mapie.
 
-Aby zmienić kolor tła karty statusu, która pojawia się po kliknięciu na urządzenie, wykonaj następujące kroki:
+#### Kolor paska narzędzi mapy (Map Toolbar Color)
 
-1.  Zaloguj się na swoje konto administratora.
-2.  Przejdź do `Ustawienia` -> `Serwer`.
-3.  W sekcji `Atrybuty` znajdź atrybut o nazwie `Map Status Card Color` (lub `Kolor karty statusu na mapie` w polskiej wersji językowej).
-4.  Wprowadź wybrany kolor w formacie heksadecymalnym (`#RRGGBB` lub `#RGB`) lub użyj ikony palety, aby wybrać kolor wizualnie. Pole posiada walidację i nie pozwoli na zapisanie nieprawidłowego formatu.
-5.  Jeśli format koloru jest nieprawidłowy, przycisk `Zapisz` będzie nieaktywny.
-6.  Zapisz zmiany.
+-   **Atrybut:** `mapColorToolbar`
+-   **Opis:** Zmienia kolor tła górnego paska narzędzi, znajdującego się nad listą urządzeń.
 
-Kolor tła karty statusu zostanie zaktualizowany po odświeżeniu strony.
+#### Kolor ikony urządzenia (Device Icon Color)
+
+-   **Atrybut:** `deviceIconColor`
+-   **Opis:** Zmienia kolor ikon reprezentujących kategorie urządzeń (np. samochód, osoba, rower) na liście urządzeń.

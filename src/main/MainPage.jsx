@@ -76,6 +76,7 @@ const MainPage = () => {
 
   const server = useSelector((state) => state.session.server);
   const mapColorSidePanel = server?.attributes?.mapColorSidePanel;
+  const mapColorToolbar = server?.attributes?.mapColorToolbar;
 
   const selectedDeviceId = useSelector((state) => state.devices.selectedId);
   const positions = useSelector((state) => state.session.positions);
@@ -120,7 +121,7 @@ const MainPage = () => {
           elevation={3}
           className={classes.header}
           style={{
-            ...mapColorSidePanel && { backgroundColor: mapColorSidePanel },
+            ...mapColorToolbar && { backgroundColor: mapColorToolbar },
           }}
         >
           <MainToolbar

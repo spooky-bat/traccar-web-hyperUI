@@ -350,6 +350,8 @@
     "serverColorSecondary": "Kolor drugorzędny",
     "serverMapColorSidePanel": "Kolor panelu bocznego mapy",
     "serverMapColorStatusCard": "Kolor karty statusu na mapie",
+    "serverMapColorToolbar": "Kolor paska narzędzi mapy",
+    "serverDeviceIconColor": "Kolor ikony urządzenia",
     "serverLogo": "Obraz logo",
     "serverLogoInverted": "Odwrócony obraz logo",
     "serverChangeDisable": "Wyłącz zmianę serwera",

@@ -29,7 +29,11 @@ const useStyles = makeStyles()((theme) => ({
   icon: {
     width: '25px',
     height: '25px',
-    filter: 'brightness(0) invert(1)',
+  },
+  coloredIcon: {
+    backgroundColor: ({ deviceIconColor }) => deviceIconColor || theme.palette.secondary.contrastText,
+    mask: ({ icon }) => `url(${icon}) no-repeat center / contain`,
+    WebkitMask: ({ icon }) => `url(${icon}) no-repeat center / contain`,
   },
   batteryText: {
     fontSize: '0.75rem',
@@ -54,18 +58,23 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 const DeviceRow = ({ devices, index, style }) => {
-  const { classes } = useStyles();
   const dispatch = useDispatch();
   const t = useTranslation();
 
   const admin = useAdministrator();
   const selectedDeviceId = useSelector((state) => state.devices.selectedId);
+  const server = useSelector((state) => state.session.server);
 
   const item = devices[index];
   const position = useSelector((state) => state.session.positions[item.id]);
 
   const devicePrimary = useAttributePreference('devicePrimary', 'name');
   const deviceSecondary = useAttributePreference('deviceSecondary', '');
+
+  const deviceIconColor = server?.attributes?.deviceIconColor;
+  const icon = mapIcons[mapIconKey(item.category)];
+
+  const { classes } = useStyles({ deviceIconColor, icon });
 
   const secondaryText = () => {
     let status;
@@ -93,7 +102,7 @@ const DeviceRow = ({ devices, index, style }) => {
       >
         <ListItemAvatar>
           <Avatar>
-            <img className={classes.icon} src={mapIcons[mapIconKey(item.category)]} alt="" />
+            <div className={`${classes.icon} ${classes.coloredIcon}`} />
           </Avatar>
         </ListItemAvatar>
         <ListItemText

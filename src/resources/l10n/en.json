@@ -350,6 +350,8 @@
     "serverColorSecondary": "Color Secondary",
     "serverMapColorSidePanel": "Map Side Panel Color",
     "serverMapColorStatusCard": "Map Status Card Color",
+    "serverMapColorToolbar": "Map Toolbar Color",
+    "serverDeviceIconColor": "Device Icon Color",
     "serverLogo": "Logo Image",
     "serverLogoInverted": "Inverted Logo Image",
     "serverChangeDisable": "Disable Server Change",
